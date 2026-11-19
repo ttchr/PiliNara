@@ -204,6 +204,7 @@ abstract final class SettingBoxKey {
       enableCurrentPageRefresh = 'enableCurrentPageRefresh',
       mixWithOthers = 'mixWithOthers',
       removeSafeArea = 'removeSafeArea',
+      carWindowFit = 'carWindowFit',
       angleDegrees = 'angleDegrees',
       liveStream = 'liveStream',
       enableDocProvider = 'enableDocProvider',

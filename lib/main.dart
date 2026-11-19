@@ -33,6 +33,7 @@ import 'package:PiliPlus/utils/platform_utils.dart';
 import 'package:PiliPlus/utils/request_utils.dart';
 import 'package:PiliPlus/utils/storage.dart';
 import 'package:PiliPlus/utils/storage_key.dart';
+import 'package:PiliPlus/utils/car_window.dart';
 import 'package:PiliPlus/utils/storage_pref.dart';
 import 'package:PiliPlus/utils/theme_utils.dart';
 import 'package:PiliPlus/utils/utils.dart';
@@ -126,6 +127,7 @@ void main() async {
       if (Pref.horizontalScreen) ?fullMode() else ?portraitUpMode(),
       setupServiceLocator(),
       if (Platform.isIOS) IOSPipHelper.init(),
+      if (Platform.isAndroid) CarWindow.init(),
     ]);
   } else if (Platform.isWindows) {
     if (await WebViewEnvironment.getAvailableVersion() != null) {
@@ -362,6 +364,32 @@ class MyApp extends StatelessWidget {
       }
     }
     // -----------------------------------------------------------------------
+
+    // 车联投屏：窗口尺寸上报为整屏但合成表面被 dock 裁剪，
+    // 按 viewPadding 裁剪根布局并清零安全区，避免二次留白与右/底遮挡。
+    if (CarWindow.active) {
+      CarWindow.debugToast(mediaQuery);
+      final vp = mediaQuery.viewPadding;
+      final fitted = Size(
+        mediaQuery.size.width - vp.horizontal,
+        mediaQuery.size.height - vp.vertical,
+      );
+      if (fitted.width > 0 && fitted.height > 0) {
+        mediaQuery = mediaQuery.copyWith(
+          size: fitted,
+          padding: EdgeInsets.zero,
+          viewPadding: EdgeInsets.zero,
+        );
+        child = Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: fitted.width,
+            height: fitted.height,
+            child: child,
+          ),
+        );
+      }
+    }
 
     if (uiScale != 1.0) {
       child = MediaQuery(

@@ -207,6 +207,13 @@ List<SettingsModel> get styleSettings => [
     defaultVal: false,
   ),
   const SwitchModel(
+    title: '车联窗口适配',
+    subtitle: '车联投屏时按 dock 安全区裁剪窗口，修复留白与遮挡；检测到车机/副屏自动开启，此项可强制开启',
+    leading: Icon(Icons.directions_car_outlined),
+    setKey: SettingBoxKey.carWindowFit,
+    defaultVal: false,
+  ),
+  const SwitchModel(
     title: '视频播放页使用深色主题',
     leading: Icon(Icons.dark_mode_outlined),
     setKey: SettingBoxKey.darkVideoPage,

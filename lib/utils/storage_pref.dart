@@ -1661,6 +1661,9 @@ abstract final class Pref {
   static bool get removeSafeArea =>
       _setting.get(SettingBoxKey.removeSafeArea, defaultValue: false);
 
+  static bool get carWindowFit =>
+      _setting.get(SettingBoxKey.carWindowFit, defaultValue: false);
+
   // AI 视频分析设置
   static bool get enableAiChat =>
       _setting.get(SettingBoxKey.enableAiChat, defaultValue: false);
